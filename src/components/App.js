@@ -26,6 +26,22 @@ const App = () => {
       });
   }, []);
 
+  const search = searchValue => {
+    setLoading(true);
+    setErrorMessage(null);
+    fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=8fc593f4`)
+      .then(response => response.json())
+      .then(jsonResponse => {
+        if (jsonResponse.Response === 'True') {
+          setMovies(jsonResponse.Search);
+          setLoading(false);
+        } else {
+          setErrorMessage(jsonResponse.Error);
+          setLoading(false);
+        }
+      });
+  };
+
   return (
     <div className="App">
       <header className="App-header">
