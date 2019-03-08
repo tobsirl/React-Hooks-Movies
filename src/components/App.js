@@ -7,7 +7,7 @@ import Movie from './Movie';
 import Search from './Search';
 
 // OMDB API key
-const MOVIE_API_URL = 'http://www.omdbapi.com/?i=tt3896198&apikey=8fc593f4';
+const MOVIE_API_URL = 'https://www.omdbapi.com/?s=man&apikey=8fc593f4';
 
 const App = () => {
   // using new react hooks useState
@@ -44,9 +44,20 @@ const App = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h2>Header</h2>
-      </header>
+      <Header text="Movies" />
+      <Search search={search} />
+      <p className="App-intro">Sharing a few of our favourite movies</p>
+      <div className="movies">
+        {loading && !errorMessage ? (
+          <span>loading...</span>
+        ) : errorMessage ? (
+          <div className="errorMessage">{errorMessage}</div>
+        ) : (
+          movies.map((movie, index) => (
+            <Movie key={`${index}-${movie.Title}`} movie={movie} />
+          ))
+        )}
+      </div>
     </div>
   );
 };
