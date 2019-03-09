@@ -17,19 +17,19 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "SEARCH_MOVIES_REQUEST":
+    case 'SEARCH_MOVIES_REQUEST':
       return {
         ...state,
         loading: true,
         errorMessage: null
       };
-    case "SEARCH_MOVIES_SUCCESS":
+    case 'SEARCH_MOVIES_SUCCESS':
       return {
         ...state,
         loading: false,
         movies: action.payload
       };
-    case "SEARCH_MOVIES_FAILURE":
+    case 'SEARCH_MOVIES_FAILURE':
       return {
         ...state,
         loading: false,
@@ -54,26 +54,43 @@ const App = () => {
     fetch(MOVIE_API_URL)
       .then(response => response.json())
       .then(jsonResponse => {
-        setMovies(jsonResponse.Search);
-        setLoading(false);
+        dispatch({
+          type: 'SEARCH_MOVIES_SUCCESS',
+          payload: jsonResponse.Search
+        });
+        // setMovies(jsonResponse.Search);
+        // setLoading(false);
       });
   }, []);
 
   const search = searchValue => {
-    setLoading(true);
-    setErrorMessage(null);
+    // setLoading(true);
+    // setErrorMessage(null);
+    dispatch({
+      type: 'SEARCH_MOVIES_REQUEST'
+    });
     fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=8fc593f4`)
       .then(response => response.json())
       .then(jsonResponse => {
         if (jsonResponse.Response === 'True') {
-          setMovies(jsonResponse.Search);
-          setLoading(false);
+          dispatch({
+            type: 'SEARCH_MOVIES_SUCCESS',
+            payload: jsonResponse.Search
+          });
+          // setMovies(jsonResponse.Search);
+          // setLoading(false);
         } else {
-          setErrorMessage(jsonResponse.Error);
-          setLoading(false);
+          dispatch({
+            type: 'SEARCH_MOVIES_FAILURE',
+            error: jsonResponse.Error
+          });
+          // setErrorMessage(jsonResponse.Error);
+          // setLoading(false);
         }
       });
   };
+
+  const { movies, errorMessage, loading } = state; // destructuring
 
   return (
     <div className="App">
