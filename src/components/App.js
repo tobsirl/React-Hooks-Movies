@@ -3,7 +3,7 @@ import './App.css';
 
 // Import the components
 import Header from './Header';
-import Movie from './Movie';
+import MovieList from './MovieList';
 import Search from './Search';
 
 // OMDB API key
@@ -104,7 +104,7 @@ const App = () => {
           <div className="errorMessage">{errorMessage}</div>
         ) : (
           movies.map((movie, index) => (
-            <Movie key={`${index}-${movie.Title}`} movie={movie} />
+            <MovieList key={`${index}-${movie.Title}`} movie={movie} />
           ))
         )}
       </div>
