@@ -11,7 +11,7 @@ const MOVIE_API_URL = 'https://www.omdbapi.com/?s=man&apikey=8fc593f4';
 
 const initialState = {
   loading: true,
-  movies: [],
+  movieList: [],
   errorMessage: null
 };
 
@@ -104,7 +104,7 @@ const App = () => {
           <div className="errorMessage">{errorMessage}</div>
         ) : (
           movies.map((movie, index) => (
-            <MovieList key={`${index}-${movie.Title}`} movie={movie} />
+            <MovieList key={`${index}-${movie.Title}`} movieList={movie} />
           ))
         )}
       </div>

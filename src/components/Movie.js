@@ -1,8 +1,17 @@
-import React from 'react'
+import React from 'react';
 
+import Modal from './Modal/Modal';
 
-const movie = (props) => {
+const Movie = ({ movie }) => {
+  console.log(movie);
   return (
+    <Modal>
+      <div>
+        <h1>Hey {movie.Title}</h1>
+      </div>
+      {/* <Movie movie={movie} onClick={getMovie} /> */}
+    </Modal>
+  );
+};
 
-  )
-}
+export default Movie;
