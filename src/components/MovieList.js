@@ -9,7 +9,7 @@ const DEFAULT_PLACEHOLDER_IMAGE =
 // const MOVIE_API_URL = 'https://www.omdbapi.com/?s=man&apikey=8fc593f4';
 
 const MovieList = ({ movieList }) => {
-  const [mov, setMov] = useState([]);
+  const [movs, setMov] = useState([]);
 
   const apiKey = '8fc593f4';
 
@@ -17,7 +17,8 @@ const MovieList = ({ movieList }) => {
     console.log(id);
     fetch(`https://www.omdbapi.com/?apikey=${apiKey}&i=${id}`)
       .then(res => res.json())
-      .then(jsonRes => setMov(jsonRes));
+      .then(jsonRes => setMov([...movs], jsonRes));
+    console.log(movs);
   };
 
   const poster =
@@ -30,12 +31,13 @@ const MovieList = ({ movieList }) => {
           width="200"
           alt={`The movie titled: ${movieList.Title}`}
           src={poster}
-          onClick={getMovie.bind(this, movieList.imdbID)}
+          onClick={() => getMovie(movieList.imdbID)}
         />
       </div>
 
       <p>({movieList.Year})</p>
       <Movie movie={movieList} />
+      {movs.map(mov => mov.Title)}
     </div>
   );
 };
